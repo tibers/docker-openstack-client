@@ -14,11 +14,11 @@ If you're using this image you probably are running the older openstack since th
 ## Quick Start
 
 ```bash
-docker pull tibers/openstack-client
+docker pull ghostoftiber/openstack-client
 
 # $(PWD) is mounted to allow for actions requiring host filesystem access.  
 # See 'Tips' section below
-docker run -ti --rm -v $(PWD):/data tibers/openstack-client
+docker run -ti --rm -v $(PWD):/data ghostoftiber/openstack-client
 
 # source the rc config file
 $ source /data/openrc.sh
@@ -51,7 +51,7 @@ commands such as `openstack image save` should ensure that the location where th
 in the `/data` folder when using the `--rm` command line option.  Example:
 
 ```bash
-docker run -it --rm -v $(PWD):/data --env-file ${RC_ENV_FILE:-~/.osc_rc.env} tibers/openstack-client openstack image save --file /data/test_image.img ${IMAGE_GUID}
+docker run -it --rm -v $(PWD):/data --env-file ${RC_ENV_FILE:-~/.osc_rc.env} ghostoftiber/openstack-client openstack image save --file /data/test_image.img ${IMAGE_GUID}
 ```
 
 
@@ -59,14 +59,14 @@ docker run -it --rm -v $(PWD):/data --env-file ${RC_ENV_FILE:-~/.osc_rc.env} tib
 Run individual commands easily by passing them as the command to run and overriding the default `/bin/sh` command.  For one-off commands, it's a good practice to remove the container with the `--rm` argument so that you don't collect a bunch of orphaned containers.  You will also want to ensure that the rc environment is configured as part of starting the container -- easiest via a .env file containing the openstack rc env vars.
 
 ```bash
-docker run -ti --rm -v $(PWD):/data --env-file ${RC_ENV_FILE:-~/.osc_rc.env} tibers/openstack-client cinder list`
+docker run -ti --rm -v $(PWD):/data --env-file ${RC_ENV_FILE:-~/.osc_rc.env} ghostoftiber/openstack-client cinder list`
 ```
 
 
 ### Simplify your typing with aliases
 ```bash
 # Get into a shell to run openstack commands
-alias oscsh='docker run -ti --rm -v $(PWD):/data --env-file ${RC_ENV_FILE:-~/.osc_rc.env} tibers/openstack-client'
+alias oscsh='docker run -ti --rm -v $(PWD):/data --env-file ${RC_ENV_FILE:-~/.osc_rc.env} ghostoftiber/openstack-client'
 # Make it look like you're running openstack locally
 alias openstack='oscsh openstack'
 ```
