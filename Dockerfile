@@ -1,22 +1,24 @@
 FROM alpine:latest
 
-MAINTAINER Jim McVea <jmcvea@gmail.com>
+MAINTAINER Joshua Knarr <josh.knarr@gmail.com>
 
 LABEL Description="Provides openstack client tools" Version="0.1"
 
 # Alpine-based installation
 # #########################
 RUN apk add --update \
-  # bash \
+  build-base \
   python-dev \
   py-pip \
   py-setuptools \
   ca-certificates \
   gcc \
+  libffi-dev \
+  openssl-dev \
   musl-dev \
   linux-headers \
-  && pip install --upgrade --no-cache-dir pip setuptools python-openstackclient \
-  && apk del gcc musl-dev linux-headers \
+  && pip install --upgrade --no-cache-dir pip setuptools neutron \
+  && apk del gcc musl-dev linux-headers libffi-dev build-base \
   && rm -rf /var/cache/apk/*
 
 # Add a volume so that a host filesystem can be mounted 

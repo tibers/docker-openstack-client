@@ -3,14 +3,20 @@ Use a docker image for openstack client tooling!
 
 Rather than futzing with all of the python dependencies to get the openstack cli tools working, use this Docker image as way to get started quickly.  There are other openstack-cli images available -- this one uses a smaller footprint by building off of the Alpine image.
 
+This particular version of this container will also install the neutron networking tools.
+
+The original version of this project can be found here: https://github.com/jmcvea/docker-openstack-client
+
+Here be dragons! That project hasn't been updated in two years!
+
 ## Quick Start
 
 ```bash
-docker pull jmcvea/openstack-client
+docker pull tibers/openstack-client
 
 # $(PWD) is mounted to allow for actions requiring host filesystem access.  
 # See 'Tips' section below
-docker run -ti --rm -v $(PWD):/data jmcvea/openstack-client
+docker run -ti --rm -v $(PWD):/data tibers/openstack-client
 
 # source the rc config file
 $ source /data/openrc.sh
@@ -43,7 +49,7 @@ commands such as `openstack image save` should ensure that the location where th
 in the `/data` folder when using the `--rm` command line option.  Example:
 
 ```bash
-docker run -it --rm -v $(PWD):/data --env-file ${RC_ENV_FILE:-~/.osc_rc.env} jmcvea/openstack-client openstack image save --file /data/test_image.img ${IMAGE_GUID}
+docker run -it --rm -v $(PWD):/data --env-file ${RC_ENV_FILE:-~/.osc_rc.env} tibers/openstack-client openstack image save --file /data/test_image.img ${IMAGE_GUID}
 ```
 
 
@@ -51,22 +57,24 @@ docker run -it --rm -v $(PWD):/data --env-file ${RC_ENV_FILE:-~/.osc_rc.env} jmc
 Run individual commands easily by passing them as the command to run and overriding the default `/bin/sh` command.  For one-off commands, it's a good practice to remove the container with the `--rm` argument so that you don't collect a bunch of orphaned containers.  You will also want to ensure that the rc environment is configured as part of starting the container -- easiest via a .env file containing the openstack rc env vars.
 
 ```bash
-docker run -ti --rm -v $(PWD):/data --env-file ${RC_ENV_FILE:-~/.osc_rc.env} jmcvea/openstack-client cinder list`
+docker run -ti --rm -v $(PWD):/data --env-file ${RC_ENV_FILE:-~/.osc_rc.env} tibers/openstack-client cinder list`
 ```
 
 
 ### Simplify your typing with aliases
 ```bash
 # Get into a shell to run openstack commands
-alias oscsh='docker run -ti --rm -v $(PWD):/data --env-file ${RC_ENV_FILE:-~/.osc_rc.env} jmcvea/openstack-client'
+alias oscsh='docker run -ti --rm -v $(PWD):/data --env-file ${RC_ENV_FILE:-~/.osc_rc.env} tibers/openstack-client'
 # Make it look like you're running openstack locally
 alias openstack='oscsh openstack'
 ```
 
+### Errors
+`'Port' object has no attribute 'keys'` is a result of using a newer openstack client with an older openstack deployment. 
 
 ## Contributing
 
-1. Fork ( http://github.com/jmcvea/docker-openstack-client/fork )
+1. Fork ( http://github.com/tibers/docker-openstack-client/fork )
 2. Create a feature branch (`git checkout -b new-feature`)
 3. Commit changes (`git commit -am 'Adding a great new feature'`)
 4. Push to the branch (`git push origin new-feature`)
@@ -74,7 +82,5 @@ alias openstack='oscsh openstack'
 
 
 ## Copyright
-
-Copyright (c) 2016 Jim McVea
 
 Licensed under MIT
