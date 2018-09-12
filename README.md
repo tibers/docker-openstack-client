@@ -11,8 +11,6 @@ Here be dragons! That project hasn't been updated in two years!
 
 If you're using this image you probably are running the older openstack since the newer modules will work in python. This image is built with python-neutronclient 6.7.0 and python-openstackclient 3.12.0.
 
-Added Dockerhub support.
-
 ## Quick Start
 
 ```bash
