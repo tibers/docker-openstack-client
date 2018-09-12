@@ -17,7 +17,7 @@ RUN apk add --update \
   openssl-dev \
   musl-dev \
   linux-headers \
-  && pip install --upgrade --no-cache-dir pip setuptools neutron \
+  && pip install --upgrade --no-cache-dir pip setuptools 'python-neutronclient==6.7.0' 'python-openstackclient==3.12.0' \
   && apk del gcc musl-dev linux-headers libffi-dev build-base \
   && rm -rf /var/cache/apk/*
 
